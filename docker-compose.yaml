@@ -1,0 +1,23 @@
+version: "3"
+networks:
+  expense:
+volumes:
+  mysql: #docker volume create mysql
+services: #docker run is equivalent
+  mysql:
+    image: mahadevan4609/mysql:v1
+    container_name: mysql #--name mysql
+    volumes:
+    - mysql:/var/lib/mysql #-v mysql:/var/lib/mysql
+  backend:
+    image: mahadevan4609/backend:v1
+    container_name: backend
+    depends_on:
+    - mysql
+  frontend:
+    image: mahadevan4609/frontend:v1
+    container_name: frontend
+    ports:
+    - 80:80
+    depends_on:
+    - backend
